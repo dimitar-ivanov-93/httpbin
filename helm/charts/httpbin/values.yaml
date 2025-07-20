@@ -1,0 +1,117 @@
+# Default values for httpbin
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Number of pod replicas to run
+replicaCount: 2
+
+# Container image configuration
+image:
+  # Docker image repository
+  repository: kennethreitz/httpbin
+  # Image tag to pull
+  tag: latest
+  # When to pull the image (IfNotPresent, Always, Never)
+  pullPolicy: IfNotPresent
+
+# Override default chart naming
+# Override the name of the chart
+nameOverride: ""
+# Override the full name of resources
+fullnameOverride: ""
+
+# Kubernetes Service configuration
+service:
+  # Service type (ClusterIP, NodePort, LoadBalancer)
+  type: ClusterIP
+  # External service port
+  port: 80
+  # Port that the service targets on pods
+  targetPort: 80
+
+# Container port configuration
+container:
+  # Port the container listens on
+  port: 80
+
+# Resource limits and requests for pods
+resources:
+  requests:
+    # Minimum CPU required
+    cpu: 100m
+    # Minimum memory required
+    memory: 128Mi
+  limits:
+    # Maximum CPU allowed
+    cpu: 200m
+    # Maximum memory allowed
+    memory: 256Mi
+
+# Health check probes configuration
+probes:
+  # Startup probe - checks if container has started successfully
+  startup:
+    enabled: true
+    # HTTP endpoint to check
+    path: /get
+    # Delay before first probe
+    initialDelaySeconds: 5
+    # How often to perform the probe
+    periodSeconds: 2
+    # Timeout for each probe
+    timeoutSeconds: 1
+    # Number of failures before giving up
+    failureThreshold: 30
+  
+  # Readiness probe - checks if pod is ready to receive traffic
+  readiness:
+    enabled: true
+    # HTTP endpoint to check
+    path: /get
+    # Delay before first probe
+    initialDelaySeconds: 0
+    # How often to perform the probe
+    periodSeconds: 5
+    # Timeout for each probe
+    timeoutSeconds: 1
+    # Number of failures before marking unready
+    failureThreshold: 3
+  
+  # Liveness probe - checks if pod needs to be restarted
+  liveness:
+    enabled: true
+    # HTTP endpoint to check
+    path: /get
+    # Delay before first probe
+    initialDelaySeconds: 0
+    # How often to perform the probe
+    periodSeconds: 10
+    # Timeout for each probe
+    timeoutSeconds: 1
+    # Number of failures before restart
+    failureThreshold: 3
+
+# Pod Disruption Budget - ensures minimum availability during updates
+pdb:
+  enabled: true
+  # Minimum number of pods that must remain available
+  minAvailable: 1
+
+# Network Policy configuration for pod-to-pod communication
+networkPolicy:
+  enabled: true
+  namespaceSelector:
+    # Allow traffic from default namespace
+    name: default
+
+# AWS Load Balancer Controller Target Group Binding
+targetGroupBinding:
+  enabled: true
+  # Will be populated by Terraform
+  targetGroupARN: ""
+
+# Pod topology spread constraints for even distribution
+topologySpread:
+  enabled: true
+  # Maximum difference in pod count between zones
+  maxSkew: 1

@@ -1,0 +1,12 @@
+---
+apiVersion: v2
+name: httpbin
+description: A Helm chart for httpbin test application
+type: application
+sources:
+  - https://github.com/dimitar-ivanov-93/httpbin/helm/charts/httpbin
+version: 1.0.0
+appVersion: 1.0.0
+maintainers:
+  - email: mitko930119@gmail.com
+    name: Dimitar Ivanov
