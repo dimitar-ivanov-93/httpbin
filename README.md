@@ -1,5 +1,7 @@
 # HTTPBin Kubernetes Deployment
 
+![HTTPBin Header](img/header.png)
+
 A production-ready Kubernetes deployment of HTTPBin using **Terraform** for infrastructure provisioning and **Helm** for application deployment on **AWS EKS**. This project demonstrates DevOps best practices including Infrastructure as Code, GitOps workflows, security hardening, and cloud-native architecture patterns.
 
 ## 🏗️ Architecture Overview
